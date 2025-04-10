@@ -199,7 +199,6 @@ console.log(safeDataToProcess);
 
 Применяем `@hiddenProperties()` к классу и `@visibleProperty()`
 к полям `name` и `surname`, которые мы хотим видеть в ответе.
-Добавим поле `surname`.
 
 ```typescript
 import {
