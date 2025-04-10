@@ -46,7 +46,7 @@ npm install @e22m4u/ts-projection
 
 **1. Определение модели пользователя с декоратором:**
 
-Используйте декоратор `@hiddenProperty()` для поля `password` и `loginAt`.
+Используйте декоратор `@hiddenProperty()` на свойстве `password`.
 
 ```typescript
 import {hiddenProperty} from '@e22m4u/ts-projection';
@@ -71,7 +71,7 @@ class User {
 
 **2. Применение проекции:**
 
-Вызов функции `applyProjection` с двумя аргументами создает новый объект
+Вызов функции `applyProjection` с двумя аргументами создаст новый объект
 исключающий свойства помеченные декоратором `@hiddenProperty()`.
 
 ```typescript
