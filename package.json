@@ -41,9 +41,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@e22m4u/js-format": "~0.1.7"
-  },
-  "peerDependencies": {
+    "@e22m4u/js-format": "~0.1.7",
     "@e22m4u/ts-reflector": "~0.1.0"
   },
   "devDependencies": {
