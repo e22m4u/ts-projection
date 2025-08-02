@@ -2,7 +2,7 @@
   "name": "@e22m4u/ts-projection",
   "version": "0.0.3",
   "description": "Модуль для работы с проекцией данных для TypeScript",
-  "author": "e22m4u <e22m4u@yandex.ru>",
+  "author": "Mikhail Evstropov <e22m4u@yandex.ru>",
   "license": "MIT",
   "keywords": [
     "data",
@@ -41,8 +41,8 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@e22m4u/js-format": "~0.1.7",
-    "@e22m4u/ts-reflector": "~0.1.0"
+    "@e22m4u/js-format": "~0.1.8",
+    "@e22m4u/ts-reflector": "~0.1.7"
   },
   "devDependencies": {
     "@commitlint/cli": "~19.8.1",
