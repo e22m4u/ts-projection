@@ -3,24 +3,22 @@
 import 'mocha';
 import 'reflect-metadata';
 import {expect} from 'chai';
-import {isEmbedded} from './projection.js';
-import {hiddenProperty} from './projection.js';
-import {lockedProperty} from './projection.js';
-import {visibleProperty} from './projection.js';
+import {noInput} from './decorators/index.js';
+import {noOutput} from './decorators/index.js';
 import {ProjectionScope} from './projection.js';
-import {applyProjection} from './projection.js';
-import {lockedProperties} from './projection.js';
-import {hiddenProperties} from './projection.js';
-import {writableProperty} from './projection.js';
+import {isEmbedded} from './decorators/index.js';
+import {allowInput} from './decorators/index.js';
+import {allowOutput} from './decorators/index.js';
+import {applyProjection} from './apply-projection.js';
 
 // --- Определим тестовые модели ---
 
 // 1. Простая модель с базовыми правилами свойств
 class SimpleModel {
   public id: number;
-  @lockedProperty() // Скрыт для INPUT
+  @noInput() // Скрыт для INPUT
   public secretInput: string;
-  @hiddenProperty() // Скрыт для OUTPUT
+  @noOutput() // Скрыт для OUTPUT
   public secretOutput: string;
   public commonData: string;
 
@@ -33,12 +31,12 @@ class SimpleModel {
 }
 
 // 2. Модель со скрытием всех свойств для OUTPUT на уровне класса
-@hiddenProperties()
+@noOutput()
 class HiddenOutputModel {
   public id: number;
   public data: string;
   // Свойство с явным разрешением для OUTPUT
-  @visibleProperty()
+  @allowOutput()
   public visibleId: number;
 
   constructor(id: number, data: string, vid: number) {
@@ -49,12 +47,12 @@ class HiddenOutputModel {
 }
 
 // 3. Модель со скрытием всех свойств для INPUT на уровне класса
-@lockedProperties()
+@noInput()
 class LockedInputModel {
   public id: number;
   public data: string;
   // Свойство с явным разрешением для INPUT
-  @writableProperty()
+  @allowInput()
   public writableData: string;
 
   constructor(id: number, data: string, wd: string) {
@@ -67,9 +65,9 @@ class LockedInputModel {
 // 4. Вложенная модель
 class Address {
   public street: string;
-  @hiddenProperty() // Скрыт для OUTPUT
+  @noOutput() // Скрыт для OUTPUT
   public zipCode: string;
-  @lockedProperty() // Скрыт для INPUT
+  @noInput() // Скрыт для INPUT
   public internalCode: string;
 
   constructor(street: string, zip: string, ic: string) {
@@ -82,9 +80,9 @@ class Address {
 // 5. Модель с вложением
 class UserWithAddress {
   public id: number;
-  @lockedProperty() // Скрыт для INPUT
+  @noInput() // Скрыт для INPUT
   public passwordHash: string;
-  @hiddenProperty() // Скрыт для OUTPUT
+  @noOutput() // Скрыт для OUTPUT
   public sessionToken: string;
   @isEmbedded(() => Address) // Указываем, что это вложение
   public address: Address;
@@ -104,7 +102,7 @@ describe('applyProjection Function', function () {
     const input = new SimpleModel(1, 'in_secret', 'out_secret', 'common');
     const originalInput = {...input}; // Для проверки иммутабельности
 
-    it('should hide @lockedProperty in INPUT scope', function () {
+    it('should hide @noInput in INPUT scope', function () {
       const result = applyProjection(ProjectionScope.INPUT, SimpleModel, input);
       expect(result).to.deep.equal({
         id: 1,
@@ -116,7 +114,7 @@ describe('applyProjection Function', function () {
       expect(input).to.deep.equal(originalInput); // Проверка, что оригинал не изменился
     });
 
-    it('should hide @hiddenProperty in OUTPUT scope', function () {
+    it('should hide @noOutput in OUTPUT scope', function () {
       const result = applyProjection(
         ProjectionScope.OUTPUT,
         SimpleModel,
@@ -155,13 +153,13 @@ describe('applyProjection Function', function () {
     const hiddenOutputInput = new HiddenOutputModel(1, 'data', 101);
     const originalHiddenOutputInput = {...hiddenOutputInput};
 
-    it('should hide all properties by default with @hiddenProperties in OUTPUT scope', function () {
+    it('should hide all properties by default with @noOutput in OUTPUT scope', function () {
       const result = applyProjection(
         ProjectionScope.OUTPUT,
         HiddenOutputModel,
         hiddenOutputInput,
       );
-      // Только visibleId должен остаться, т.к. он помечен @visibleProperty
+      // Только visibleId должен остаться, т.к. он помечен @allowOutput
       expect(result).to.deep.equal({
         visibleId: 101,
       });
@@ -171,13 +169,13 @@ describe('applyProjection Function', function () {
       expect(hiddenOutputInput).to.deep.equal(originalHiddenOutputInput);
     });
 
-    it('should show all properties with @hiddenProperties in INPUT scope', function () {
+    it('should show all properties with @noOutput in INPUT scope', function () {
       const result = applyProjection(
         ProjectionScope.INPUT,
         HiddenOutputModel,
         hiddenOutputInput,
       );
-      // В INPUT scope @hiddenProperties не действует
+      // В INPUT scope @noOutput не действует
       expect(result).to.deep.equal({
         id: 1,
         data: 'data',
@@ -190,13 +188,13 @@ describe('applyProjection Function', function () {
     const lockedInputInput = new LockedInputModel(2, 'data2', 'writable');
     const originalLockedInputInput = {...lockedInputInput};
 
-    it('should hide all properties by default with @lockedProperties in INPUT scope', function () {
+    it('should hide all properties by default with @noInput in INPUT scope', function () {
       const result = applyProjection(
         ProjectionScope.INPUT,
         LockedInputModel,
         lockedInputInput,
       );
-      // Только writableData должен остаться, т.к. он помечен @writableProperty
+      // Только writableData должен остаться, т.к. он помечен @allowInput
       expect(result).to.deep.equal({
         writableData: 'writable',
       });
@@ -206,13 +204,13 @@ describe('applyProjection Function', function () {
       expect(lockedInputInput).to.deep.equal(originalLockedInputInput);
     });
 
-    it('should show all properties with @lockedProperties in OUTPUT scope', function () {
+    it('should show all properties with @noInput in OUTPUT scope', function () {
       const result = applyProjection(
         ProjectionScope.OUTPUT,
         LockedInputModel,
         lockedInputInput,
       );
-      // В OUTPUT scope @lockedProperties не действует
+      // В OUTPUT scope @noInput не действует
       expect(result).to.deep.equal({
         id: 2,
         data: 'data2',
@@ -240,7 +238,7 @@ describe('applyProjection Function', function () {
         address: {
           street: '123 Main St',
           zipCode: '90210', // Не скрыт в INPUT
-          // internalCode скрыт через @lockedProperty в Address
+          // internalCode скрыт через @noInput в Address
         },
       });
       expect(result).not.to.have.property('passwordHash'); // Скрыт в UserWithAddress
@@ -261,7 +259,7 @@ describe('applyProjection Function', function () {
         passwordHash: 'hash123', // Не скрыт в OUTPUT
         address: {
           street: '123 Main St',
-          // zipCode скрыт через @hiddenProperty в Address
+          // zipCode скрыт через @noOutput в Address
           internalCode: 'internal1', // Не скрыт в OUTPUT
         },
       });
