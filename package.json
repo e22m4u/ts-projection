@@ -1,6 +1,6 @@
 {
   "name": "@e22m4u/ts-projection",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Модуль для работы с проекцией данных для TypeScript",
   "author": "Mikhail Evstropov <e22m4u@yandex.ru>",
   "license": "MIT",
