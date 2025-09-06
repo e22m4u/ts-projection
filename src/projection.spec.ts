@@ -149,7 +149,6 @@ describe('applyProjection function', function () {
         input,
       );
       expect(resultInput).to.have.property('secretOutput');
-
       // в OUTPUT scope должен быть secretInput
       const resultOutput = applyProjection(
         ProjectionScope.OUTPUT,
@@ -200,7 +199,6 @@ describe('applyProjection function', function () {
           input,
         );
         expect(resultInput).to.have.property('secretOutput');
-
         // в OUTPUT scope должен быть secretInput
         const resultOutput = applyProjection(
           ProjectionScope.OUTPUT,
