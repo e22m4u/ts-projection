@@ -57,7 +57,7 @@ function _applyProjection(scope, model, data) {
     // моделей для указанного конструктора
     const prClassMetadataList = ProjectionRuleReflector.getClassMetadata(model);
     const prPropertyMetadataMap = ProjectionRuleReflector.getPropertiesMetadata(model);
-    const epPropertyMetadataMap = EmbeddedProjectionReflector.getPropertyMetadata(model);
+    const epPropertyMetadataMap = EmbeddedProjectionReflector.getPropertiesMetadata(model);
     // создание неглубокой копии объекта
     // для сохранения иммутабельности
     const result = { ...data };

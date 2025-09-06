@@ -101,7 +101,7 @@ function _applyProjection<T>(
   const prPropertyMetadataMap =
     ProjectionRuleReflector.getPropertiesMetadata(model);
   const epPropertyMetadataMap =
-    EmbeddedProjectionReflector.getPropertyMetadata(model);
+    EmbeddedProjectionReflector.getPropertiesMetadata(model);
   // создание неглубокой копии объекта
   // для сохранения иммутабельности
   const result = {...data};

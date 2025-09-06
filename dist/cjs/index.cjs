@@ -71,7 +71,7 @@ var _ProjectionRuleReflector = class _ProjectionRuleReflector {
    */
   static setClassMetadata(metadata, target) {
     var _a;
-    const oldList = (_a = import_ts_reflector2.Reflector.getOwnMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target)) != null ? _a : [];
+    const oldList = (_a = import_ts_reflector2.Reflector.getMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target)) != null ? _a : [];
     const newList = [...oldList, metadata];
     import_ts_reflector2.Reflector.defineMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, newList, target);
   }
@@ -82,11 +82,11 @@ var _ProjectionRuleReflector = class _ProjectionRuleReflector {
    * @returns Список метаданных правил проекции.
    */
   static getClassMetadata(target) {
-    const metadata = import_ts_reflector2.Reflector.getOwnMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target);
+    const metadata = import_ts_reflector2.Reflector.getMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target);
     return metadata != null ? metadata : [];
   }
   /**
-   * Set propery metadata.
+   * Set property metadata.
    *
    * @param metadata
    * @param target
@@ -94,7 +94,7 @@ var _ProjectionRuleReflector = class _ProjectionRuleReflector {
    */
   static setPropertyMetadata(metadata, target, propertyKey) {
     var _a;
-    const oldMap = import_ts_reflector2.Reflector.getOwnMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
+    const oldMap = import_ts_reflector2.Reflector.getMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
     const newMap = new Map(oldMap);
     const oldList = (_a = newMap.get(propertyKey)) != null ? _a : [];
     const newList = [...oldList, metadata];
@@ -107,7 +107,7 @@ var _ProjectionRuleReflector = class _ProjectionRuleReflector {
    * @param target
    */
   static getPropertiesMetadata(target) {
-    const metadata = import_ts_reflector2.Reflector.getOwnMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
+    const metadata = import_ts_reflector2.Reflector.getMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
     return metadata != null ? metadata : /* @__PURE__ */ new Map();
   }
 };
@@ -179,18 +179,18 @@ var _EmbeddedProjectionReflector = class _EmbeddedProjectionReflector {
    * @param propertyKey
    */
   static setPropertyMetadata(metadata, target, propertyKey) {
-    const oldMap = import_ts_reflector6.Reflector.getOwnMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
+    const oldMap = import_ts_reflector6.Reflector.getMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
     const newMap = new Map(oldMap);
     newMap.set(propertyKey, metadata);
     import_ts_reflector6.Reflector.defineMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, newMap, target);
   }
   /**
-   * Get property metadata.
+   * Get properties metadata.
    *
    * @param target
    */
-  static getPropertyMetadata(target) {
-    const metadata = import_ts_reflector6.Reflector.getOwnMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
+  static getPropertiesMetadata(target) {
+    const metadata = import_ts_reflector6.Reflector.getMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
     return metadata != null ? metadata : /* @__PURE__ */ new Map();
   }
 };
@@ -240,7 +240,7 @@ function _applyProjection(scope, model, data) {
   }
   const prClassMetadataList = ProjectionRuleReflector.getClassMetadata(model);
   const prPropertyMetadataMap = ProjectionRuleReflector.getPropertiesMetadata(model);
-  const epPropertyMetadataMap = EmbeddedProjectionReflector.getPropertyMetadata(model);
+  const epPropertyMetadataMap = EmbeddedProjectionReflector.getPropertiesMetadata(model);
   const result = { ...data };
   for (const key in result) {
     if (!Object.prototype.hasOwnProperty.call(result, key)) {

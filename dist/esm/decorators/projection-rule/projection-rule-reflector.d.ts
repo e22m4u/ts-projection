@@ -21,7 +21,7 @@ export declare class ProjectionRuleReflector {
      */
     static getClassMetadata(target: Constructor): ProjectionRuleMetadataList;
     /**
-     * Set propery metadata.
+     * Set property metadata.
      *
      * @param metadata
      * @param target

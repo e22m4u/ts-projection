@@ -12,18 +12,18 @@ export class EmbeddedProjectionReflector {
      * @param propertyKey
      */
     static setPropertyMetadata(metadata, target, propertyKey) {
-        const oldMap = Reflector.getOwnMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
+        const oldMap = Reflector.getMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
         const newMap = new Map(oldMap);
         newMap.set(propertyKey, metadata);
         Reflector.defineMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, newMap, target);
     }
     /**
-     * Get property metadata.
+     * Get properties metadata.
      *
      * @param target
      */
-    static getPropertyMetadata(target) {
-        const metadata = Reflector.getOwnMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
+    static getPropertiesMetadata(target) {
+        const metadata = Reflector.getMetadata(EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY, target);
         return metadata ?? new Map();
     }
 }

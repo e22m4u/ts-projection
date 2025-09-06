@@ -20,7 +20,7 @@ export class EmbeddedProjectionReflector {
     target: Constructor,
     propertyKey: string,
   ) {
-    const oldMap = Reflector.getOwnMetadata(
+    const oldMap = Reflector.getMetadata(
       EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY,
       target,
     );
@@ -34,14 +34,14 @@ export class EmbeddedProjectionReflector {
   }
 
   /**
-   * Get property metadata.
+   * Get properties metadata.
    *
    * @param target
    */
-  static getPropertyMetadata(
+  static getPropertiesMetadata(
     target: Constructor,
   ): EmbeddedProjectionMetadataMap {
-    const metadata = Reflector.getOwnMetadata(
+    const metadata = Reflector.getMetadata(
       EMBEDDED_PROJECTION_PROPERTY_METADATA_KEY,
       target,
     );

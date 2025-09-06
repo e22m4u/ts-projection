@@ -12,8 +12,7 @@ export class ProjectionRuleReflector {
      * @param target
      */
     static setClassMetadata(metadata, target) {
-        const oldList = Reflector.getOwnMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target) ??
-            [];
+        const oldList = Reflector.getMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target) ?? [];
         const newList = [...oldList, metadata];
         Reflector.defineMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, newList, target);
     }
@@ -24,18 +23,18 @@ export class ProjectionRuleReflector {
      * @returns Список метаданных правил проекции.
      */
     static getClassMetadata(target) {
-        const metadata = Reflector.getOwnMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target);
+        const metadata = Reflector.getMetadata(PROJECTION_RULE_CLASS_METADATA_KEY, target);
         return metadata ?? [];
     }
     /**
-     * Set propery metadata.
+     * Set property metadata.
      *
      * @param metadata
      * @param target
      * @param propertyKey
      */
     static setPropertyMetadata(metadata, target, propertyKey) {
-        const oldMap = Reflector.getOwnMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
+        const oldMap = Reflector.getMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
         const newMap = new Map(oldMap);
         const oldList = newMap.get(propertyKey) ?? [];
         const newList = [...oldList, metadata];
@@ -48,7 +47,7 @@ export class ProjectionRuleReflector {
      * @param target
      */
     static getPropertiesMetadata(target) {
-        const metadata = Reflector.getOwnMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
+        const metadata = Reflector.getMetadata(PROJECTION_RULE_PROPERTY_METADATA_KEY, target);
         return metadata ?? new Map();
     }
 }

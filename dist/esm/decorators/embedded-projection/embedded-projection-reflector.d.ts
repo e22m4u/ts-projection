@@ -14,9 +14,9 @@ export declare class EmbeddedProjectionReflector {
      */
     static setPropertyMetadata(metadata: EmbeddedProjectionMetadata, target: Constructor, propertyKey: string): void;
     /**
-     * Get property metadata.
+     * Get properties metadata.
      *
      * @param target
      */
-    static getPropertyMetadata(target: Constructor): EmbeddedProjectionMetadataMap;
+    static getPropertiesMetadata(target: Constructor): EmbeddedProjectionMetadataMap;
 }
