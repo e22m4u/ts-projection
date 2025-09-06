@@ -444,7 +444,7 @@ console.log(safeUserInput);
 * `ProjectionScope.INPUT`
 * `ProjectionScope.OUTPUT`
 
-Правило:
+Правила:
 
 * `ProjectionRule.HIDE`
 * `ProjectionRule.SHOW`
