@@ -135,6 +135,34 @@ describe('projectionRule', function () {
             const res = ProjectionRuleReflector.getClassMetadata(Target);
             expect(res).to.be.eql([MD1, MD2]);
         });
+        it('should extend the inherited metadata', function () {
+            let BaseTarget = class BaseTarget {
+            };
+            BaseTarget = __decorate([
+                projectionRule(MD1)
+            ], BaseTarget);
+            let Target = class Target extends BaseTarget {
+            };
+            Target = __decorate([
+                projectionRule(MD2)
+            ], Target);
+            const res = ProjectionRuleReflector.getClassMetadata(Target);
+            expect(res).to.be.eql([MD1, MD2]);
+        });
+        it('should not affect the parent metadata', function () {
+            let BaseTarget = class BaseTarget {
+            };
+            BaseTarget = __decorate([
+                projectionRule(MD1)
+            ], BaseTarget);
+            let Target = class Target extends BaseTarget {
+            };
+            Target = __decorate([
+                projectionRule(MD2)
+            ], Target);
+            const res = ProjectionRuleReflector.getClassMetadata(BaseTarget);
+            expect(res).to.be.eql([MD1]);
+        });
         describe('decorator aliases', function () {
             describe('hidden', function () {
                 it('should set the HIDE rule for INPUT scope', function () {
@@ -252,6 +280,42 @@ describe('projectionRule', function () {
                 ['prop1', [MD1]],
                 ['prop2', [MD2]],
             ]);
+        });
+        describe('inheritance', function () {
+            it('should extend the inherited property metadata', function () {
+                class BaseTarget {
+                    param;
+                }
+                __decorate([
+                    projectionRule(MD1),
+                    __metadata("design:type", Object)
+                ], BaseTarget.prototype, "param", void 0);
+                class Target extends BaseTarget {
+                }
+                __decorate([
+                    projectionRule(MD2),
+                    __metadata("design:type", Object)
+                ], Target.prototype, "param", void 0);
+                const res = ProjectionRuleReflector.getPropertiesMetadata(Target);
+                expect(entries(res)).to.be.eql([['param', [MD1, MD2]]]);
+            });
+            it('should not affect the parent property metadata', function () {
+                class BaseTarget {
+                    param;
+                }
+                __decorate([
+                    projectionRule(MD1),
+                    __metadata("design:type", Object)
+                ], BaseTarget.prototype, "param", void 0);
+                class Target extends BaseTarget {
+                }
+                __decorate([
+                    projectionRule(MD2),
+                    __metadata("design:type", Object)
+                ], Target.prototype, "param", void 0);
+                const res = ProjectionRuleReflector.getPropertiesMetadata(BaseTarget);
+                expect(entries(res)).to.be.eql([['param', [MD1]]]);
+            });
         });
         describe('decorator aliases', function () {
             describe('hidden', function () {

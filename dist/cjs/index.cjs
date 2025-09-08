@@ -31,8 +31,9 @@ __export(index_exports, {
   allowInput: () => allowInput,
   allowOutput: () => allowOutput,
   applyProjection: () => applyProjection,
+  embedded: () => embedded,
+  embeddedProjection: () => embeddedProjection,
   hidden: () => hidden,
-  isEmbedded: () => isEmbedded,
   noInput: () => noInput,
   noOutput: () => noOutput,
   projectionRule: () => projectionRule,
@@ -208,10 +209,10 @@ function embeddedProjection(metadata) {
   };
 }
 __name(embeddedProjection, "embeddedProjection");
-function isEmbedded(model) {
+function embedded(model) {
   return embeddedProjection({ model });
 }
-__name(isEmbedded, "isEmbedded");
+__name(embedded, "embedded");
 
 // dist/esm/apply-projection.js
 function applyProjection(scopeOrModel, modelOrData, data) {
@@ -284,8 +285,9 @@ __name(_applyProjection, "_applyProjection");
   allowInput,
   allowOutput,
   applyProjection,
+  embedded,
+  embeddedProjection,
   hidden,
-  isEmbedded,
   noInput,
   noOutput,
   projectionRule,

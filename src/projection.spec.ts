@@ -6,7 +6,7 @@ import {expect} from 'chai';
 import {noInput} from './decorators/index.js';
 import {noOutput} from './decorators/index.js';
 import {ProjectionScope} from './projection.js';
-import {isEmbedded} from './decorators/index.js';
+import {embedded} from './decorators/index.js';
 import {allowInput} from './decorators/index.js';
 import {allowOutput} from './decorators/index.js';
 import {applyProjection} from './apply-projection.js';
@@ -92,7 +92,7 @@ class UserWithAddress {
   public passwordHash: string;
   @noOutput() // скрыт для OUTPUT
   public sessionToken: string;
-  @isEmbedded(() => Address) // вложение
+  @embedded(() => Address) // вложение
   public address: Address;
 
   constructor(id: number, pw: string, st: string, addr: Address) {

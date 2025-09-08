@@ -6,7 +6,7 @@ import { EmbeddedProjectionReflector } from './embedded-projection-reflector.js'
  *
  * @param metadata
  */
-function embeddedProjection(metadata) {
+export function embeddedProjection(metadata) {
     return function (target, propertyKey, descriptor) {
         const decoratorType = getDecoratorTargetType(target, propertyKey, descriptor);
         if (decoratorType !== DecoratorTargetType.INSTANCE_PROPERTY)
@@ -16,10 +16,10 @@ function embeddedProjection(metadata) {
     };
 }
 /**
- * Is embedded decorator.
+ * Embedded decorator.
  *
  * @param model
  */
-export function isEmbedded(model) {
+export function embedded(model) {
     return embeddedProjection({ model });
 }

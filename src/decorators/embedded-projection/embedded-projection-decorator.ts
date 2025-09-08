@@ -10,7 +10,7 @@ import {EmbeddedProjectionReflector} from './embedded-projection-reflector.js';
  *
  * @param metadata
  */
-function embeddedProjection<T extends object>(
+export function embeddedProjection<T extends object>(
   metadata: EmbeddedProjectionMetadata,
 ) {
   return function (
@@ -37,10 +37,10 @@ function embeddedProjection<T extends object>(
 }
 
 /**
- * Is embedded decorator.
+ * Embedded decorator.
  *
  * @param model
  */
-export function isEmbedded(model: () => Constructor) {
+export function embedded(model: () => Constructor) {
   return embeddedProjection({model});
 }

@@ -120,6 +120,24 @@ describe('projectionRule', function () {
       expect(res).to.be.eql([MD1, MD2]);
     });
 
+    it('should extend the inherited metadata', function () {
+      @projectionRule(MD1)
+      class BaseTarget {}
+      @projectionRule(MD2)
+      class Target extends BaseTarget {}
+      const res = ProjectionRuleReflector.getClassMetadata(Target);
+      expect(res).to.be.eql([MD1, MD2]);
+    });
+
+    it('should not affect the parent metadata', function () {
+      @projectionRule(MD1)
+      class BaseTarget {}
+      @projectionRule(MD2)
+      class Target extends BaseTarget {}
+      const res = ProjectionRuleReflector.getClassMetadata(BaseTarget);
+      expect(res).to.be.eql([MD1]);
+    });
+
     describe('decorator aliases', function () {
       describe('hidden', function () {
         it('should set the HIDE rule for INPUT scope', function () {
@@ -216,6 +234,34 @@ describe('projectionRule', function () {
         ['prop1', [MD1]],
         ['prop2', [MD2]],
       ]);
+    });
+
+    describe('inheritance', function () {
+      it('should extend the inherited property metadata', function () {
+        class BaseTarget {
+          @projectionRule(MD1)
+          param?: unknown;
+        }
+        class Target extends BaseTarget {
+          @projectionRule(MD2)
+          declare param?: unknown;
+        }
+        const res = ProjectionRuleReflector.getPropertiesMetadata(Target);
+        expect(entries(res)).to.be.eql([['param', [MD1, MD2]]]);
+      });
+
+      it('should not affect the parent property metadata', function () {
+        class BaseTarget {
+          @projectionRule(MD1)
+          param?: unknown;
+        }
+        class Target extends BaseTarget {
+          @projectionRule(MD2)
+          declare param?: unknown;
+        }
+        const res = ProjectionRuleReflector.getPropertiesMetadata(BaseTarget);
+        expect(entries(res)).to.be.eql([['param', [MD1]]]);
+      });
     });
 
     describe('decorator aliases', function () {
