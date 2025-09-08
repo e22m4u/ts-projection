@@ -35,6 +35,7 @@ __export(index_exports, {
   isEmbedded: () => isEmbedded,
   noInput: () => noInput,
   noOutput: () => noOutput,
+  projectionRule: () => projectionRule,
   visible: () => visible
 });
 module.exports = __toCommonJS(index_exports);
@@ -287,5 +288,6 @@ __name(_applyProjection, "_applyProjection");
   isEmbedded,
   noInput,
   noOutput,
+  projectionRule,
   visible
 });

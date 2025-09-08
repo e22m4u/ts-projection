@@ -12,7 +12,9 @@ import {ProjectionRuleReflector} from './projection-rule-reflector.js';
  *
  * @param metadata
  */
-function projectionRule<T extends object>(metadata: ProjectionRuleMetadata) {
+export function projectionRule<T extends object>(
+  metadata: ProjectionRuleMetadata,
+) {
   return function (
     target: Constructor<T> | Prototype<T>,
     propertyKey?: string,

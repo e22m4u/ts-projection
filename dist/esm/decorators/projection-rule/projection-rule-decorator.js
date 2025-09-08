@@ -8,7 +8,7 @@ import { ProjectionRuleReflector } from './projection-rule-reflector.js';
  *
  * @param metadata
  */
-function projectionRule(metadata) {
+export function projectionRule(metadata) {
     return function (target, propertyKey, descriptor) {
         const decoratorType = getDecoratorTargetType(target, propertyKey, descriptor);
         if (decoratorType === DecoratorTargetType.CONSTRUCTOR) {

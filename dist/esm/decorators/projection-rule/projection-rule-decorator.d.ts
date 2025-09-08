@@ -1,5 +1,12 @@
 import { Prototype } from '../../types.js';
 import { Constructor } from '../../types.js';
+import { ProjectionRuleMetadata } from './projection-rule-metadata.js';
+/**
+ * Projection rule decorator.
+ *
+ * @param metadata
+ */
+export declare function projectionRule<T extends object>(metadata: ProjectionRuleMetadata): (target: Constructor<T> | Prototype<T>, propertyKey?: string, descriptor?: PropertyDescriptor) => void;
 /**
  * No input decorator.
  */
